@@ -1,0 +1,8 @@
+
+if docker compose --version >/dev/null 2>&1 ; then
+  alias dc="docker compose"
+  alias docker-compose="docker compose"
+else
+  alias dc=docker-compose
+fi
+

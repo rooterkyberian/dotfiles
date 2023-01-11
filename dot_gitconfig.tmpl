@@ -1,0 +1,54 @@
+[user]
+    name = {{ .name }}
+    email = {{ .email }}
+[core]
+	excludesFile = ~/.gitignore
+    editor = vim
+[color]
+	ui = auto
+[diff]
+    compactionHeuristic = true
+[push]
+	default = simple
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    ls = ls-files
+    pullff = pull --ff-only --prune
+    ff = merge --ff-only
+    df = diff
+    dfc = diff --cached
+    lo = log -p
+    lc = log ORIG_HEAD.. --stat --no-merges
+    who = shortlog -s --
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+    # show-branch
+    pushr = push origin HEAD:refs/for/master
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+	logtree = log --graph --oneline --decorate --all
+	ci = commit --verbose
+	lastdiff = diff HEAD^..HEAD
+	push-set-upstream = "!gitbranchname() { git symbolic-ref --short HEAD; }; gitpushupstream() { git push --set-upstream origin `gitbranchname`; }; gitpushupstream"
+    # https://stackoverflow.com/questions/45306543/how-to-create-a-git-alias-to-recursively-run-a-command-on-all-submodules/50995953#50995953
+    recursive-run = !sh -c '\
+        $@ && \
+        git submodule foreach --recursive \"$@ || :\" && \
+    :' -
+#[commit]
+#	gpgSign = true
+[tag]
+	forceSignAnnotated = true
+[init]
+	defaultBranch = main
+[rebase]
+	autosquash = true
+[rerere]
+    enabled = true
+[merge]
+    ff = false
+    log = true
+    conflictstyle = diff3
